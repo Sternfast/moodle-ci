@@ -1,0 +1,15 @@
+# Drop this at .github/workflows/ci.yml in EACH plugin repo. This is the whole per-plugin CI file —
+# all the real logic lives in the shared reusable workflow, so you fix CI once (in Sternfast/moodle-ci)
+# and every plugin inherits it. Pin @main to a tag (e.g. @v1) once the workflow is tagged for stability.
+name: CI
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  moodle-plugin-ci:
+    uses: Sternfast/moodle-ci/.github/workflows/plugin-ci.yml@main
+    # Optional: a plugin can override the tested matrix, e.g. a 4.4-only plugin:
+    # with:
+    #   matrix-json: '[{"php":"8.2","moodle-branch":"MOODLE_404_STABLE"}]'
