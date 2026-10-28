@@ -27,8 +27,9 @@ jobs:
           if [ -n "${{ inputs.matrix-json }}" ]; then
             echo "include=${{ inputs.matrix-json }}" >> "$GITHUB_OUTPUT"
           else
-            # Default: LTS + the current 5.x line. Keep PHP paired to each branch's requirement.
-            echo 'include=[{"php":"8.2","moodle-branch":"MOODLE_405_STABLE"},{"php":"8.3","moodle-branch":"MOODLE_500_STABLE"},{"php":"8.3","moodle-branch":"MOODLE_503_STABLE"}]' >> "$GITHUB_OUTPUT"
+            # Default: LTS + the current stable 5.x. Keep PHP paired to each branch's requirement.
+            # Only branches that exist and install are listed here; add a new one the week it ships.
+            echo 'include=[{"php":"8.2","moodle-branch":"MOODLE_405_STABLE"},{"php":"8.3","moodle-branch":"MOODLE_502_STABLE"}]' >> "$GITHUB_OUTPUT"
           fi
 
   test:
@@ -55,7 +56,7 @@ jobs:
 
     steps:
       - name: Check out plugin
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: plugin
 
